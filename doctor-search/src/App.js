@@ -1,35 +1,26 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { Component } from 'react';
+//import logo from './logo.svg';
 import './App.css';
-const axios = require('axios');
+import SearchForm from './components/SearchForm/SearchForm.js'
 
-let npis = []
-
-axios.get('https://npiregistry.cms.hhs.gov/api/?', {
-    params: {
-        version: 2.1,
-        city: 'jacksonville',
-        state: 'FL',
-        last_name: 'Rust',
-        pretty: true
-    }
-}).then(resp => {
-    data = resp.data.results
-    for (let i = 0; i < data.length; i++) {
-        npis.push(data[i].number)
-    }
-});
+class App extends Component {
+  constructor(props) {
+    super(props);
 
 
-function App() {
+}
+
+render() {
+
+
   return (
-    <div className="App">
-      <header className="App-header">
-     
-     
-      </header>
+    <div>
+      <h1>Search Form</h1>
+
+      <SearchForm/>
     </div>
-  );
+  )
+}
 }
 
 export default App;
