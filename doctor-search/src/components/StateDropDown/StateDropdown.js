@@ -1,22 +1,23 @@
-import React from 'react'
+import React, { useState } from 'react'
 import stateData from '../../data/states.json'
 import { Input, FormGroup, Label } from 'reactstrap';
 
-class StateDropDown extends React.Component {
-    constructor(){
-      super();
-      this.state = {
-        stateName: ""
-      }
-    }
+function StateDropDown(props) {
+//   const [stateName, setStateName] = useState("");
   
+//   const handleOnChange = (event) => {
+//     event.preventDefault()
+//     console.log(event.target.value)
+//     setStateName(event.target.value)
+// }
+
+
+
+  const list = stateData.map(d => <option>{d.name}</option>)
 
   
-    render() {
+  return (          
      
-      const list = stateData.map(d => <option>{d.name}</option>)
-      
-      return (
         
         <FormGroup>
           <Label>State:</Label>
@@ -24,8 +25,8 @@ class StateDropDown extends React.Component {
             type="select"
             name="state"
             placeholder="State"
-            value={this.state.StateName}
-            onChange={e => this.setState({ stateName: e.target.value })}>
+            value={props.stateName}
+            onChange={props.handleOnChangeState}>
               <option value="">Choose a State</option>
               {list}
 
@@ -35,7 +36,8 @@ class StateDropDown extends React.Component {
         
         
       )
-    }
   }
+    
+  
   
   export default StateDropDown;
