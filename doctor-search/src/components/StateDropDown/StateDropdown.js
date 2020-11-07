@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import stateData from '../../data/states.json'
 import { Input, FormGroup, Label } from 'reactstrap';
 
@@ -13,7 +13,7 @@ function StateDropDown(props) {
 
 
 
-  const list = stateData.map(d => <option>{d.name}</option>)
+  const list = stateData.map(d => <option>{d.abbreviation}</option>)
 
   
   return (          

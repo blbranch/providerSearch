@@ -11,46 +11,45 @@ from '../StateDropDown/StateDropdown';
 import SpecialtyDropDown
 from '../SpecailtyDropDown/SpecialtyDropDown';
 
+import ProviderApi from '../API/Api'
+
 function SearchForm() {
     const [cityName, setCityName] = useState("");
     const [stateName, setStateName] = useState("");
     const [zipcode, setZipcode] = useState("");
     const [specialtyName, setSpecialtyName] = useState("");
+    const [isSubmitted, setIsSubmitted] = useState(false)
 
     const handleOnChangeCity = (event) => {
         event.preventDefault()
-        console.log(event.target.value)
         setCityName(event.target.value)
     }
    
-  
     const handleOnChangeState = (event) => {
       event.preventDefault()
-      console.log(event.target.value)
       setStateName(event.target.value)
     }
 
     const handleOnChangeSpecialty = (event) => {
         event.preventDefault()
-        console.log(event.target.value)
         setSpecialtyName(event.target.value)
       }
 
     const handleOnChangeZip = (event) => {
         event.preventDefault()
-        console.log(event.target.value)
         setZipcode(event.target.value)
     }
 
-  
-
-
-
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        setIsSubmitted(true)
+        //console.log(cityName, stateName, zipcode, specialtyName)
+    }
     
     return (
         <Container className="float-left">
             
-        <Form className="form">
+        <Form className="form" onSubmit = {handleSubmit} >
           
             <Col  md="6"> 
             <FormGroup>
@@ -78,10 +77,25 @@ function SearchForm() {
             </FormGroup>
             </Col>
             
-            <Button color="primary">Submit</Button>{' '}
+            <Button type="submit" color="primary">Submit</Button>
         
         </Form>
+        <br></br>
+
+        <div>
+            {isSubmitted && 
+            <ProviderApi 
+                specialtyName = { specialtyName }
+                stateName = { stateName }
+                cityName = { cityName }
+                zipcode = { zipcode } 
+             />
+            }   
+        </div>
+
+            
         </Container>
+        
 
     )
 

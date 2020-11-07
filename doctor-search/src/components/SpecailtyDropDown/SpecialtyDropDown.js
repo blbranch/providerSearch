@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React  from 'react'
 import specialtyData from '../../data/specialties.json'
 import { Input, FormGroup, Label } from 'reactstrap';
 
