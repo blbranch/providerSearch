@@ -6,7 +6,7 @@ function SpecialtyDropDown(props) {
 
 
 
-  const list = specialtyData.map(d => <option>{d.Code}</option>)
+  const list = specialtyData.map(specialty => <option key={specialty.id}>{specialty.desc}</option>)
 
   
   return (          

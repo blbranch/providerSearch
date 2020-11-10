@@ -12,13 +12,15 @@ import SpecialtyDropDown
 from '../SpecailtyDropDown/SpecialtyDropDown';
 
 import ProviderApi from '../API/Api'
+const axios = require('axios');
+
 
 function SearchForm() {
     const [cityName, setCityName] = useState("");
     const [stateName, setStateName] = useState("");
     const [zipcode, setZipcode] = useState("");
     const [specialtyName, setSpecialtyName] = useState("");
-    const [isSubmitted, setIsSubmitted] = useState(false)
+    const [providers, setProviders] = useState([])
 
     const handleOnChangeCity = (event) => {
         event.preventDefault()
@@ -42,8 +44,23 @@ function SearchForm() {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        setIsSubmitted(true)
-        //console.log(cityName, stateName, zipcode, specialtyName)
+
+        axios.get('http://localhost:5000/?', {
+            params: {
+                //version: 2.1,
+                city: cityName,
+                state: stateName,
+                postal_code: zipcode,
+                taxonomy_description: specialtyName
+             }
+          })
+            .then(res => {
+              const results = res.data.results
+              setProviders( 
+                results 
+              );
+            })
+         
     }
     
     return (
@@ -83,12 +100,9 @@ function SearchForm() {
         <br></br>
 
         <div>
-            {isSubmitted && 
+            {providers.length > 0 && 
             <ProviderApi 
-                specialtyName = { specialtyName }
-                stateName = { stateName }
-                cityName = { cityName }
-                zipcode = { zipcode } 
+                providers = { providers }
              />
             }   
         </div>

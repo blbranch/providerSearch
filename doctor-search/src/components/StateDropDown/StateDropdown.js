@@ -13,7 +13,7 @@ function StateDropDown(props) {
 
 
 
-  const list = stateData.map(d => <option>{d.abbreviation}</option>)
+  const list = stateData.map(state => <option key={state.abbreviation}>{state.abbreviation}</option>)
 
   
   return (          

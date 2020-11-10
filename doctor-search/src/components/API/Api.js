@@ -1,50 +1,42 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import {
     Card, CardText, CardBody, 
-    CardTitle, CardSubtitle
+    CardTitle, CardSubtitle, Col, Row
 } from 'reactstrap';
-const axios = require('axios');
 
-const ProviderApi = (props) => {
-const [providers, setProviders] = useState([])
 
-    useEffect(() => {
+export default class ProviderApi extends React.Component {
 
-      axios.get('http://localhost:5000/?', {
-        params: {
-            //version: 2.1,
-            city: props.cityName,
-            state: props.stateName,
-            postal_code: props.zipcode
-         }
-      })
-        .then(res => {
-          const results = res.data.results
-          
-          setProviders({ 
-            providers: results 
-          })
-        })
-    
-    
-      });
 
-    const providerData = providers.map(provider => 
-              <Card>
-                    <CardBody>
-                        <CardTitle>{provider.basic.first_name} {provider.basic.last_name}</CardTitle>
-                        <CardSubtitle>{provider.taxonomies[0].desc}</CardSubtitle>
-                        <CardText>{provider.addresses[0].address_1}</CardText>   
-                    </CardBody>
-              </Card>    
-    )
+  
+    render() {
 
-    
+      
       return (
-        <div>
-          {providerData}
-        </div>
-      )
-  }
+          <div>
+              {this.props.providers.map(provider => (
+              <Row>
+              <Col sm="6">
 
-export default ProviderApi
+             
+                <Card key={provider.number}>
+                    <CardBody>
+                        <CardTitle>
+                          {provider.enumeration_type === 'NPI-1' ?   provider.basic.first_name + ' ' + provider.basic.last_name : provider.basic.organization_name}
+                         </CardTitle>
+                        <CardSubtitle>{provider.taxonomies[0].desc}</CardSubtitle>
+                        <CardText>{provider.addresses[0].address_1}</CardText>
+                        {provider.addresses[0].address_2.length > 0 ? <CardText> {provider.addresses[0].address_2} </CardText> : <span></span>}
+                        <CardText>{`${provider.addresses[0].city}, ${provider.addresses[0].state} ${provider.addresses[0].postal_code}`}</CardText>
+                        
+                    </CardBody>
+                </Card>
+                <br></br>
+            </Col>
+            </Row>
+            
+            ))}
+          </div>
+      )
+    }
+  }
